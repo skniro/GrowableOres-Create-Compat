@@ -1,4 +1,4 @@
-# GrowableOres Create Compat
+# Create:GrowableOres Compat
 Use Mixin make growable ores compatible with create machine.
 If this mod cause game crash, don't report issue to create. Please report issue to us.
 ![GrowableOres](https://s2.loli.net/2023/07/18/BlKiGRb9VecTmwz.png)
