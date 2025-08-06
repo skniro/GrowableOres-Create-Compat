@@ -1,54 +1,65 @@
+plugins {
+    id "architectury-plugin" version "3.4.+"
+    id "dev.architectury.loom" version "1.7.+" apply false
+}
+apply plugin: 'java'
+
+architectury {
+    minecraft = minecraft_version
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+
+tasks.withType(JavaCompile).configureEach {
+
+    it.options.encoding = 'UTF-8'
+    it.options.release = 17
+}
+
 subprojects {
-    
-    apply plugin: 'java'
-    
-    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-    java.withSourcesJar()
-        
-    jar {
-        manifest {
-            attributes([
-                'Specification-Title'     : project.archives_base_name,
-                'Specification-Vendor'    : mod_author,
-                'Specification-Version'   : project.mod_version,
-                'Implementation-Title'    : project.name,
-                'Implementation-Version'  : project.mod_version,
-                'Implementation-Vendor'   : project.mod_author,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                'Timestampe'              : System.currentTimeMillis(),
-                'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
-                'Build-On-Minecraft'      : minecraft_version
-            ])
-        }
+    apply plugin: "dev.architectury.loom"
+
+    loom {
+        silentMojangMappingsLicense()
     }
-    
+
     repositories {
+        maven { url = "https://maven.parchmentmc.org" } // Parchment mappings
 
-        mavenCentral()
-
-        maven {
-            name = 'Sponge / Mixin'
-            url = 'https://repo.spongepowered.org/repository/maven-public/'
-        }
-
-        maven {
-            name = 'BlameJared Maven (CrT / Bookshelf)'
-            url = 'https://maven.blamejared.com'
-        }
+        // mavens used on both forge and fabric
+        maven { url = "https://maven.blamejared.com/" } // JEI
+        maven { url = "https://maven.tterrag.com/" } // Flywheel on both, Create and Registrate on forge
     }
-    
+
+    dependencies {
+        minecraft "com.mojang:minecraft:$minecraft_version"
+        // Can't use parchment for some reason, game ends up completely unmapped
+        mappings loom.officialMojangMappings()
+
+        // see each subproject for more dependencies.
+    }
+}
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
+
+    base.archivesName = archives_base_name
+    group = maven_group
+
+    // Formats the mod version to include the loader, Minecraft version, and build number (if present)
+    // example: 1.0.0+fabric-1.18.2-build.100
+    version = "$mod_version+$project.name-$minecraft_version"
 
     tasks.withType(JavaCompile).configureEach {
-    
-        it.options.encoding = 'UTF-8'
-        it.options.release = 17
+        options.encoding = "UTF-8"
     }
 
-    // Disables Gradle's custom module metadata from being published to maven. The
-    // metadata includes mapped dependencies which are not reasonably consumable by
-    // other mod developers.
-    tasks.withType(GenerateModuleMetadata) {
-
-        enabled = false
+    java {
+        withSourcesJar()
     }
 }
