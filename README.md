@@ -15,5 +15,5 @@ Discord server https://discord.gg/pDaMyHDfBy
 This project is licensed under MIT.
 
 ## Mod Life Cycle
-[LifeCycle Web](https://lifecycle.sttsakara.top/)
+[LifeCycle Web](https://lifecycle.skniro.org/)
 
