@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "growable_ores_create_compat",
+  "version": "${version}",
+  "name": "Create GrowableOres Compat",
+  "description": "Use Mixin make growable ores compatible with create machine.",
+  "authors": [
+    "skniro"
+  ],
+  "contact": {
+    "website": "https://www.curseforge.com/skniro"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.skniro.growable_ores_create_compat.GrowableOresCreateCompat"
+    ]
+  },
+  "mixins": [
+    "growable_ores_create_compat.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "fabric": "*",
+    "minecraft": ["1.20", "1.20.1"],
+    "growable_ores": "*",
+    "create": "*"
+  }
+}

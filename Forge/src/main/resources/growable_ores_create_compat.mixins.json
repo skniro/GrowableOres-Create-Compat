@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.skniro.growable_ores_create_compat.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinCreateSawBlockEntity",
+    "MixinCreateHarvesterMovementBehaviour",
+    "MixinCreateTreeCutter"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
